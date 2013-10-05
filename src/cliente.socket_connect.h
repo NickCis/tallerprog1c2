@@ -9,6 +9,7 @@ class TCPSocketConnect : public TCPSocket, public SocketIO {
 		TCPSocketConnect();
 		~TCPSocketConnect();
 
+		int connect(const std::string& ip);
 		int connect(const int port, const std::string& ip);
 		int connect(struct sockaddr_in & serv_addr);
 };

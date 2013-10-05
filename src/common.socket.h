@@ -7,6 +7,9 @@
 class Socket {
 	protected:
 		unsigned int fd;
+		struct sockaddr_in* ip2struct(const int port, const std::string& ip);
+		struct sockaddr_in* ip2struct(const std::string& service, const std::string& ip);
+		struct sockaddr_in* ip2struct(const std::string& ipport);
 	public:
 		Socket();
 		~Socket();
@@ -16,10 +19,6 @@ class Socket {
 };
 
 class TCPSocket : public virtual Socket {
-	protected:
-		struct sockaddr_in* ip2struct(const int port, const std::string& ip);
-		struct sockaddr_in* ip2struct(const std::string& service, const std::string& ip);
-
 	public:
 		TCPSocket();
 		~TCPSocket();

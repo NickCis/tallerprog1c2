@@ -1,37 +1,34 @@
 #ifndef __LISTA_HPP__
 #define __LISTA_HPP__
 
-// Declaro como namespace Anonimo asi solo Lista lo puede usar
-//namespace {
-	template<class T>
-	class Nodo {
-		protected:
-			T ele;
-			Nodo<T> *sig;
+template<class T>
+class Nodo {
+	protected:
+		T ele;
+		Nodo<T> *sig;
 
-		public:
-			Nodo(T& e) : ele(e), sig(NULL){
-			}
-			~Nodo(){
-				if(this->sig)
-					delete this->sig;
-			}
+	public:
+		Nodo(T& e) : ele(e), sig(NULL){
+		}
+		~Nodo(){
+			if(this->sig)
+				delete this->sig;
+		}
 
-			Nodo<T>& operator+=(Nodo<T> *n){
-				this->sig = n;
-				return *this;
-			}
+		Nodo<T>& operator+=(Nodo<T> *n){
+			this->sig = n;
+			return *this;
+		}
 
-			Nodo<T>* operator++(int){
-				return this->sig;
-			}
+		Nodo<T>* operator++(int){
+			return this->sig;
+		}
 
-			Nodo<T>& operator>>(T& ele){
-				ele  = this->ele;
-				return *this;
-			}
-	};
-//}
+		Nodo<T>& operator>>(T& ele){
+			ele  = this->ele;
+			return *this;
+		}
+};
 
 template<class T>
 class Lista {

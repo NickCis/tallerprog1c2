@@ -2,11 +2,27 @@
 
 #include <stdlib.h>
 
+using std::string;
+
 TCPSocketConnect::TCPSocketConnect() : TCPSocket(), SocketIO(){}
 TCPSocketConnect::~TCPSocketConnect(){}
 
+int TCPSocketConnect::connect(const string& ip){
+	struct sockaddr_in* addr = this->ip2struct(ip);
+
+	if(!addr)
+		return -1;
+
+	int ret = this->connect(*addr);
+	free(addr);
+	return ret;
+}
 int TCPSocketConnect::connect(const int port, const std::string& ip){
 	struct sockaddr_in* addr = this->ip2struct(port, ip);
+
+	if(!addr)
+		return -1;
+
 	int ret = this->connect(*addr);
 	free(addr);
 	return ret;

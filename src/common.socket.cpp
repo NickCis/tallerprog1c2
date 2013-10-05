@@ -10,6 +10,7 @@
 
 using std::string;
 using std::stringstream;
+using std::size_t;
 
 Socket::Socket() : fd(0){}
 Socket::~Socket(){
@@ -26,20 +27,25 @@ int Socket::shutdown(int how){
 	return ::shutdown(this->fd, how);
 }
 
-TCPSocket::TCPSocket(){
-	this->fd = socket(AF_INET, SOCK_STREAM, 0);
+struct sockaddr_in* Socket::ip2struct(const string& ipport){
+	string ip, service;
+	size_t found = ipport.find(':');
+	if(found != std::string::npos){
+		ip = ipport.substr(0, found);
+		service = ipport.substr(found+1, ipport.length()-found);
+		return this->ip2struct(service, ip);
+	}
+	return NULL;
 }
 
-TCPSocket::~TCPSocket(){}
-
-struct sockaddr_in* TCPSocket::ip2struct(const int port, const string& ip){
+struct sockaddr_in* Socket::ip2struct(const int port, const string& ip){
 	string service;
 	stringstream ss;
 	ss << port;
 	service = ss.str();
 	return this->ip2struct(service, ip);
 }
-struct sockaddr_in* TCPSocket::ip2struct(const string& service, const string& ip){
+struct sockaddr_in* Socket::ip2struct(const string& service, const string& ip){
 	struct sockaddr_in* addr;
 	struct addrinfo *servinfo;
 
@@ -53,3 +59,9 @@ struct sockaddr_in* TCPSocket::ip2struct(const string& service, const string& ip
 
 	return addr;
 }
+
+TCPSocket::TCPSocket(){
+	this->fd = socket(AF_INET, SOCK_STREAM, 0);
+}
+
+TCPSocket::~TCPSocket(){}

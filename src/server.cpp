@@ -86,6 +86,10 @@ int threads_create(Lista<ThreadListen*> & threads, char* thread_str){
 void threads_shutdown(Lista<ThreadListen*> & threads){
 	ThreadListen* thread;
 	~threads;
+
+	if(!threads)
+		return;
+
 	do {
 		threads >> thread;
 		thread->shutdown();
@@ -95,6 +99,10 @@ void threads_shutdown(Lista<ThreadListen*> & threads){
 void threads_join(Lista<ThreadListen*> & threads){
 	ThreadListen* thread;
 	~threads;
+
+	if(!threads)
+		return;
+
 	do {
 		threads >> thread;
 		thread->join();
