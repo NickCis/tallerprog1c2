@@ -1,9 +1,12 @@
 #include "common.thread.h"
+#include <signal.h>
 
 Thread::Thread() {}
 Thread::~Thread() {}
 
 void* Thread::runner(void* arg) {
+	// Prevenir sigpipe, y manejar errores desde el write
+	signal(SIGPIPE, SIG_IGN);
 	return ((Thread*) arg)->run();
 }
 

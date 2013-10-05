@@ -38,15 +38,19 @@ void* ThreadListen::run(){
 	ss << "PUERTO " << this->port;
 
 	while( (fd = this->sock.accept())){
-		//fd->write(ss.str()+" Aceptado. Recibiendo datos...");
-		Logger::log(ss.str()+". Conexion aceptada.");
-		string msg;
-		if(!fd->read(msg)){
-			stringstream ll;
-			string ans = "Datos recibidos exitosamente. Cantidad de bytes recibidos: ";
-			ll << msg.length();
-			//fd->write(ans+ll.str()+".");
-			Logger::log(ss.str()+". Recibidos "+ll.str()+" bytes.");
+		if(fd->write(ss.str()+" Aceptado. Recibiendo datos...")){
+			Logger::log(ss.str()+". Error escribiendo mensaje de bienvenida.");
+		}else{
+			Logger::log(ss.str()+". Conexion aceptada.");
+			string msg;
+			if(!fd->read(msg)){
+				stringstream ll;
+				string ans = "Datos recibidos exitosamente. Cantidad de bytes recibidos: ";
+				ll << msg.length();
+				if(fd->write(ans+ll.str()+"."))
+					Logger::log(ss.str()+". Error escribiendo mensaje de verificacion.");
+				Logger::log(ss.str()+". Recibidos "+ll.str()+" bytes.");
+			}
 		}
 
 		Logger::log(ss.str()+". Conexion cerrada.");
