@@ -106,5 +106,6 @@ void threads_join(Lista<ThreadListen*> & threads){
 	do {
 		threads >> thread;
 		thread->join();
+		delete thread;
 	} while(threads++);
 }

@@ -31,7 +31,7 @@ int SocketIO::read(string &msg){
 	str[len] = 0;
 
 	msg = str;
-	delete str;
+	delete[] str;
 	return 0;
 }
 
