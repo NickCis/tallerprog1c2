@@ -1,18 +1,37 @@
 #include "common.socket.h"
+#include <sstream>
+#include <stdlib.h>
 #include <errno.h>
 #include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <sys/types.h>
 
 using std::string;
+using std::stringstream;
 
-TCPSocket::TCPSocket() : fd(0), backlog(5){
+Socket::Socket() : fd(0){}
+Socket::~Socket(){
+	if(this->fd){
+		close(fd);
+	}
+}
+
+TCPSocket::TCPSocket(){
 	this->fd = socket(AF_INET, SOCK_STREAM, 0);
 }
 
+//TCPSocket::TCPSocket(int fd) : fd(fd){}
+TCPSocket::~TCPSocket(){}
+
 struct sockaddr_in* TCPSocket::ip2struct(const int port, const string& ip){
 	string service;
-	return this->ip2struct(hints, service, ip);
+	stringstream ss;
+	ss << port;
+	service = ss.str();
+	return this->ip2struct(service, ip);
 }
-struct sockaddr_in* TCPSocket::ip2struct(string& service, const string& ip){
+struct sockaddr_in* TCPSocket::ip2struct(const string& service, const string& ip){
 	struct sockaddr_in* addr;
 	struct addrinfo *servinfo;
 
@@ -25,38 +44,4 @@ struct sockaddr_in* TCPSocket::ip2struct(string& service, const string& ip){
 	freeaddrinfo(servinfo);
 
 	return addr;
-}
-
-int TCPSocket::listen(const int port){
-	struct sockaddr_in serv_addr
-	memset((char*) &serv_addr, 0, sizeof(serv_addr));
-	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_addr.s_addr = INADDR_ANY;
-	serv_addr.sin_port = htons(port);
-
-	return this->listen(serv_addr);
-}
-
-int TCPSocket::listen(const int port, const std::string& ip){
-
-
-
-}
-
-int TCPSocket::listen(struct sockaddr_in & serv_addr){
-	if ( bind( this->fd, (struct sockaddr *) &serv_addr, (socklen_t) sizeof(struct sockaddr)) > 0)
-		return 1;
-
-	return listen(this->fd, this->backlog);;
-}
-
-TCPSocket& TCPSocket::setBacklog(const unsigned int backlog){
-	this->backlog = backlog;
-	return *this;
-}
-
-TCPSocket::~TCPSocket(){
-	if(this->fd){
-		close(fd);
-	}
 }

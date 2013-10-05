@@ -3,26 +3,26 @@
 
 #include <string>
 #include <netdb.h>
-#include <arpa/inet.h>
-#include <sys/types.h>
 
-class TCPSocket {
+class Socket {
 	protected:
 		unsigned int fd;
-		unsigned int backlog;
+	public:
+		Socket();
+		~Socket();
+};
+
+class TCPSocket : public virtual Socket {
+	protected:
 		struct sockaddr_in* ip2struct(const int port, const std::string& ip);
 		struct sockaddr_in* ip2struct(const std::string& service, const std::string& ip);
+		//TCPSocket(int fd);
 
 	public:
 		TCPSocket();
 		~TCPSocket();
-
-		int listen(const int port);
-		int listen(const int port, const std::string& ip);
-		int listen(struct sockaddr_in & serv_addr);
-
-		TCPSocket& setBacklog(const unsigned int backlog);
-
 };
+
+
 
 #endif
