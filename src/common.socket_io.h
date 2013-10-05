@@ -10,7 +10,7 @@ class SocketIO : public virtual Socket {
 		~SocketIO();
 
 		int read(std::string &msg);
-		int write(std::string &msg);
+		int write(const std::string &msg);
 
 };
 

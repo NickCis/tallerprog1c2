@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/types.h>
+#include <sys/socket.h>
 
 using std::string;
 using std::stringstream;
@@ -17,11 +18,18 @@ Socket::~Socket(){
 	}
 }
 
+int Socket::shutdown(){
+	return this->shutdown(SHUT_RDWR);
+}
+
+int Socket::shutdown(int how){
+	return ::shutdown(this->fd, how);
+}
+
 TCPSocket::TCPSocket(){
 	this->fd = socket(AF_INET, SOCK_STREAM, 0);
 }
 
-//TCPSocket::TCPSocket(int fd) : fd(fd){}
 TCPSocket::~TCPSocket(){}
 
 struct sockaddr_in* TCPSocket::ip2struct(const int port, const string& ip){

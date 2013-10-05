@@ -35,7 +35,7 @@ int SocketIO::read(string &msg){
 	return 0;
 }
 
-int SocketIO::write(string &msg){
+int SocketIO::write(const string &msg){
 	uint32_t len = htonl(msg.length());
 	if(send(this->fd, (void*) &len, 4, 0) != 4)
 		return -1;

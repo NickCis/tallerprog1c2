@@ -1,28 +1,55 @@
 #include "server.thread_listen.h"
 
-#include <iostream>
+#include <sstream>
+#include "common.logger.h"
 
 using std::string;
-using std::cout;
-using std::endl;
+using std::stringstream;
 
-ThreadListen::ThreadListen(int port) : port(port){}
+ThreadListen::ThreadListen() : port(0){}
 ThreadListen::~ThreadListen(){}
+
+int ThreadListen::listen(int port){
+	int ret;
+	this->port = port;
+	stringstream ss;
+	ss << "PUERTO " << this->port << ". ";
+
+	if((ret = this->sock.listen(this->port))){
+		Logger::log(ss.str()+"Error.");
+		return ret;
+	}
+
+	Logger::log(ss.str()+"Abierto.");
+	return 0;
+}
+
+int ThreadListen::shutdown(){
+	return this->sock.shutdown();
+}
+
+int ThreadListen::shutdown(int how){
+	return this->sock.shutdown(how);
+}
 
 void* ThreadListen::run(){
 	SocketIO* fd;
-
-	if(this->sock.listen(this->port)){
-		cout << "Error en listen" << endl;
-		return NULL;
-	}
+	stringstream ss;
+	ss << "PUERTO " << this->port;
 
 	while( (fd = this->sock.accept())){
+		//fd->write(ss.str()+" Aceptado. Recibiendo datos...");
+		Logger::log(ss.str()+". Conexion aceptada.");
 		string msg;
 		if(!fd->read(msg)){
-			cout << "Nuevo msje '" << msg << "'" << endl;
+			stringstream ll;
+			string ans = "Datos recibidos exitosamente. Cantidad de bytes recibidos: ";
+			ll << msg.length();
+			//fd->write(ans+ll.str()+".");
+			Logger::log(ss.str()+". Recibidos "+ll.str()+" bytes.");
 		}
 
+		Logger::log(ss.str()+". Conexion cerrada.");
 		delete fd;
 	}
 

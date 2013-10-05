@@ -10,13 +10,15 @@ class Socket {
 	public:
 		Socket();
 		~Socket();
+
+		int shutdown();
+		int shutdown(int how);
 };
 
 class TCPSocket : public virtual Socket {
 	protected:
 		struct sockaddr_in* ip2struct(const int port, const std::string& ip);
 		struct sockaddr_in* ip2struct(const std::string& service, const std::string& ip);
-		//TCPSocket(int fd);
 
 	public:
 		TCPSocket();

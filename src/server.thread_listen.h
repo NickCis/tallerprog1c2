@@ -11,7 +11,11 @@ class ThreadListen : public Thread {
 		virtual void* run();
 
 	public:
-		ThreadListen(int port);
+		ThreadListen();
 		~ThreadListen();
+
+		int listen(int port);
+		int shutdown(int how);
+		int shutdown();
 };
 #endif
