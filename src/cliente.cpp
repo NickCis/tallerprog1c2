@@ -75,13 +75,11 @@ int main(int argc, char*argv[]){
 void read_all(istream& in, string &str){
 	stringstream ss;
 
-	char c;
-	//do {
-	//	c = ifs.get();
-	//	ss << c;
-	//} while (ifs.good());
-	while((c = in.get()) != EOF)
+	char c = in.get();
+	while(in.good()){
 		ss << c;
+		c = in.get();
+	}
 
 	str = ss.str();
 }
