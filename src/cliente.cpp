@@ -79,10 +79,12 @@ int read_file(const char* path, string &str){
 	stringstream ss;
 
 	char c;
-	do {
-		c = ifs.get();
+	//do {
+	//	c = ifs.get();
+	//	ss << c;
+	//} while (ifs.good());
+	while((c = ifs.get()) != EOF)
 		ss << c;
-	} while (ifs.good());
 
 	str = ss.str();
 

@@ -42,7 +42,7 @@ void* ThreadListen::run(){
 		if(fd->write(ss.str()+" Aceptado. Recibiendo datos...")){
 			Logger::log(ss.str()+". Error escribiendo mensaje de bienvenida.");
 		}else{
-			Logger::log(ss.str()+". Conexion aceptada.");
+			Logger::log(ss.str()+". Conexión aceptada.");
 			string msg;
 			if(!fd->read(msg)){
 				stringstream ll;
@@ -54,7 +54,7 @@ void* ThreadListen::run(){
 			}
 		}
 
-		Logger::log(ss.str()+". Conexion cerrada.");
+		Logger::log(ss.str()+". Conexión cerrada.");
 		delete fd;
 	}
 
