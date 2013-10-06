@@ -40,25 +40,20 @@ struct sockaddr_in* Socket::ip2struct(const string& ipport){
 }
 
 struct sockaddr_in* Socket::ip2struct(const int port, const string& ip){
-	string service;
-	stringstream ss;
-	ss << port;
-	service = ss.str();
-	return this->ip2struct(service, ip);
+	struct sockaddr_in *serv_addr = (struct sockaddr_in *) calloc(1, sizeof(sockaddr_in));
+	serv_addr->sin_family = AF_INET;
+	serv_addr->sin_port = htons(port);
+	//serv_addr->sin_addr.s_addr = inet_addr(ip.c_str());
+	inet_pton(AF_INET, ip.c_str(), &(serv_addr->sin_addr));
+	return serv_addr;
 }
-struct sockaddr_in* Socket::ip2struct(const string& service, const string& ip){
-	struct sockaddr_in* addr;
-	struct addrinfo *servinfo;
 
-	if(getaddrinfo(ip.c_str(), service.c_str(), NULL, &servinfo))
-		return NULL;
+struct sockaddr_in* Socket::ip2struct(const string& port, const string& ip){
+	stringstream ss(port);
+	int p;
+	ss >> p;
 
-	addr = (struct sockaddr_in*) malloc(sizeof(struct sockaddr_in));
-	memcpy(addr, servinfo->ai_addr, sizeof(struct sockaddr_in));
-
-	freeaddrinfo(servinfo);
-
-	return addr;
+	return this->ip2struct(p, ip);
 }
 
 TCPSocket::TCPSocket(){

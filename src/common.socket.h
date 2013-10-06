@@ -8,7 +8,7 @@ class Socket {
 	protected:
 		unsigned int fd;
 		struct sockaddr_in* ip2struct(const int port, const std::string& ip);
-		struct sockaddr_in* ip2struct(const std::string& service, const std::string& ip);
+		struct sockaddr_in* ip2struct(const std::string& port, const std::string& ip);
 		struct sockaddr_in* ip2struct(const std::string& ipport);
 	public:
 		Socket();
