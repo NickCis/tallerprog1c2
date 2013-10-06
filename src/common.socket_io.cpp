@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <string>
 
 using std::string;
 
@@ -40,7 +41,8 @@ int SocketIO::write(const string &msg){
 	if(send(this->fd, (void*) &len, 4, 0) != 4)
 		return -1;
 
-	if((uint32_t) send(this->fd, (void*) msg.c_str(), msg.length(), 0) != msg.length())
+	if ((uint32_t) send(this->fd,
+			(void*) msg.c_str(), msg.length(), 0) != msg.length())
 		return -1;
 
 	return 0;

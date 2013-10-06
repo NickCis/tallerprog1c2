@@ -8,8 +8,7 @@ class Nodo {
 		Nodo<T> *sig;
 
 	public:
-		Nodo(T& e) : ele(e), sig(NULL){
-		}
+		explicit Nodo(T& e) : ele(e), sig(NULL){}
 		~Nodo(){
 			if(this->sig)
 				delete this->sig;
@@ -48,9 +47,9 @@ class Lista {
 		 */
 		Lista<T>& operator<<(T &ele){
 			Nodo<T>* n = new Nodo<T>(ele);
-			if(!this->pri){
+			if (!this->pri){
 				this->pri = n;
-			}else if(this->cte){
+			}else if (this->cte){
 				(*n) += (*this->cte)++;
 				(*this->cte) += n;
 			}
@@ -65,9 +64,9 @@ class Lista {
 		Lista<T>& operator<(T &ele){
 			Nodo<T>* n = new Nodo<T>(ele);
 
-			if(! this->pri){
+			if (! this->pri){
 				this->pri = n;
-			}else if(this->cte){
+			}else if (this->cte){
 				Nodo<T> * aux = this->pri;
 				(*n) += (*this->cte)++;
 
@@ -137,14 +136,14 @@ class Lista {
 			//if(this->pri)
 			//	delete this->pri;
 
-			if(lst.pri){
+			if (lst.pri){
 				Nodo<T>* auxCte = lst.cte;
 				T aux;
 				~lst;
 				do {
 					lst >> aux;
 					(*this) << aux;
-				} while(lst++);
+				} while (lst++);
 
 				lst.cte = auxCte;
 				~(*this);

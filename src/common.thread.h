@@ -4,7 +4,7 @@
 class Thread {
 	private:
 		pthread_t me;
-		static void* runner(void*);
+		static void* runner(void* ptr);
 
 	protected:
 		virtual void* run() = 0;

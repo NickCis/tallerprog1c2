@@ -2,6 +2,7 @@
 #define __CLIENTE_SOCKET_CONNECT_H__
 #include "common.socket.h"
 #include "common.socket_io.h"
+#include <string>
 
 class TCPSocketConnect : public TCPSocket, public SocketIO {
 	//using TCPSocket::fd;

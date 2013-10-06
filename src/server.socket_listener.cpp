@@ -1,6 +1,7 @@
 #include "server.socket_listener.h"
 #include <stdlib.h>
 #include <string.h>
+#include <string>
 
 TCPSocketListener::TCPSocketListener() : backlog(5){}
 TCPSocketListener::~TCPSocketListener() {}
@@ -23,7 +24,8 @@ int TCPSocketListener::listen(const int port, const std::string& ip){
 }
 
 int TCPSocketListener::listen(struct sockaddr_in & serv_addr){
-	if ( bind( this->fd, (struct sockaddr *) &serv_addr, (socklen_t) sizeof(struct sockaddr)))
+	if ( bind( this->fd, (struct sockaddr *) &serv_addr,
+			(socklen_t) sizeof(struct sockaddr)))
 		return -1;
 
 	return ::listen(this->fd, this->backlog);

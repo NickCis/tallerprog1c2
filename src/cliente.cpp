@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <sstream>
 #include "cliente.socket_connect.h"
 
@@ -23,18 +24,15 @@ int main(int argc, char*argv[]){
 	string ip_port = argv[1];
 	string port;
 	string data_length;
-	if(get_port(ip_port, port)){
+	if(get_port(ip_port, port))
 		return 1;
-	}
 
-	if(sock.connect(ip_port)){
+	if(sock.connect(ip_port))
 		return 1;
-	}
 
 	string msj;
-	if(sock.read(msj)){
+	if(sock.read(msj))
 		return 2;
-	}
 
 	if(msj.compare("PUERTO "+port+" Aceptado. Recibiendo datos..."))
 		return 2;
@@ -45,8 +43,9 @@ int main(int argc, char*argv[]){
 		if(read_file(argv[2], msj)){
 			return 3;
 		}
-	}else
+	}else{
 		getline(cin, msj);
+	}
 
 	{
 		stringstream ss;
@@ -56,15 +55,15 @@ int main(int argc, char*argv[]){
 
 	cout << "[CLIENTE] Enviando datos..." << endl;
 
-	if(sock.write(msj)){
+	if(sock.write(msj))
 		return 3;
-	}
 
-	if(sock.read(msj)){
+	if(sock.read(msj))
 		return 3;
-	}
 
-	if(msj.compare("Datos recibidos exitosamente. Cantidad de bytes recibidos: "+data_length+"."))
+	if(msj.compare(
+			"Datos recibidos exitosamente. Cantidad de bytes recibidos: "+
+			data_length+"."))
 		return 2;
 
 	cout << "[SERVIDOR] " << msj << endl;
@@ -83,7 +82,7 @@ int read_file(const char* path, string &str){
 	do {
 		c = ifs.get();
 		ss << c;
-	} while(ifs.good());
+	} while (ifs.good());
 
 	str = ss.str();
 

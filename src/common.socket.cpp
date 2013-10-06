@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
+#include <string>
 
 using std::string;
 using std::stringstream;
@@ -40,7 +41,8 @@ struct sockaddr_in* Socket::ip2struct(const string& ipport){
 }
 
 struct sockaddr_in* Socket::ip2struct(const int port, const string& ip){
-	struct sockaddr_in *serv_addr = (struct sockaddr_in *) calloc(1, sizeof(sockaddr_in));
+	struct sockaddr_in *serv_addr = (struct sockaddr_in *) calloc(1,
+		sizeof(sockaddr_in));
 	serv_addr->sin_family = AF_INET;
 	serv_addr->sin_port = htons(port);
 	//serv_addr->sin_addr.s_addr = inet_addr(ip.c_str());

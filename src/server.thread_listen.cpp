@@ -1,6 +1,7 @@
 #include "server.thread_listen.h"
 
 #include <sstream>
+#include <string>
 #include "common.logger.h"
 
 using std::string;
@@ -37,7 +38,7 @@ void* ThreadListen::run(){
 	stringstream ss;
 	ss << "PUERTO " << this->port;
 
-	while( (fd = this->sock.accept())){
+	while((fd = this->sock.accept())){
 		if(fd->write(ss.str()+" Aceptado. Recibiendo datos...")){
 			Logger::log(ss.str()+". Error escribiendo mensaje de bienvenida.");
 		}else{

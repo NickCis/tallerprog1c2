@@ -1,6 +1,7 @@
 #include "cliente.socket_connect.h"
 
 #include <stdlib.h>
+#include <string>
 
 using std::string;
 
@@ -29,6 +30,7 @@ int TCPSocketConnect::connect(const int port, const std::string& ip){
 }
 
 int TCPSocketConnect::connect(struct sockaddr_in & serv_addr){
-	return ::connect(this->fd, (struct sockaddr *) &serv_addr, (socklen_t) sizeof(struct sockaddr));
+	return ::connect(this->fd, (struct sockaddr *) &serv_addr,
+			(socklen_t) sizeof(struct sockaddr));
 }
 

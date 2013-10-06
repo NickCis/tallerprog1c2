@@ -6,12 +6,11 @@
 class SocketIO : public virtual Socket {
 	public:
 		SocketIO();
-		SocketIO(unsigned int fd);
+		explicit SocketIO(unsigned int fd);
 		~SocketIO();
 
 		int read(std::string &msg);
 		int write(const std::string &msg);
-
 };
 
 #endif

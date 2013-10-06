@@ -24,7 +24,7 @@ int main(int argc, char* argv[]){
 
 	errors = threads_create(threads, argv[1]);
 
-	while( (c = cin.get()) != 'q');
+	while ( (c = cin.get()) != 'q') {}
 
 	threads_shutdown(threads);
 	threads_join(threads);
@@ -93,7 +93,7 @@ void threads_shutdown(Lista<ThreadListen*> & threads){
 	do {
 		threads >> thread;
 		thread->shutdown();
-	} while(threads++);
+	} while (threads++);
 }
 
 void threads_join(Lista<ThreadListen*> & threads){
@@ -107,5 +107,5 @@ void threads_join(Lista<ThreadListen*> & threads){
 		threads >> thread;
 		thread->join();
 		delete thread;
-	} while(threads++);
+	} while (threads++);
 }

@@ -1,5 +1,6 @@
 #include "common.logger.h"
 #include <iostream>
+#include <string>
 
 using std::string;
 using std::cout;
