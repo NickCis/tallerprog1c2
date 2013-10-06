@@ -5,8 +5,10 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <string>
+#include <sstream>
 
 using std::string;
+using std::stringstream;
 
 SocketIO::SocketIO() {}
 SocketIO::SocketIO(unsigned int fd) {
@@ -22,16 +24,22 @@ int SocketIO::read(string &msg){
 
 	len = ntohl(len);
 
-	char *str = new char[len+1];
+	char *str = new char[len];
 
 	if(((uint32_t) recv(this->fd, (void*) str, len, 0)) != len){
-		delete str;
+		msg = "";
+		delete[] str;
 		return -1;
 	}
 
-	str[len] = 0;
+	{
+		stringstream ss;
+		for(uint32_t i=0; i < len; i++)
+			ss << str[i];
 
-	msg = str;
+		msg = ss.str();
+	}
+
 	delete[] str;
 	return 0;
 }
