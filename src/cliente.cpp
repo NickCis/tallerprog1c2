@@ -6,6 +6,7 @@
 
 using std::string;
 using std::stringstream;
+using std::istream;
 using std::ifstream;
 using std::cout;
 using std::cin;
@@ -44,7 +45,7 @@ int main(int argc, char*argv[]){
 			return 3;
 		}
 	}else{
-		getline(cin, msj);
+		read_cin(msj);
 	}
 
 	{
@@ -71,11 +72,7 @@ int main(int argc, char*argv[]){
 	return 0;
 }
 
-int read_file(const char* path, string &str){
-	ifstream ifs(path);
-	if(!ifs.is_open())
-		return -1;
-
+void read_all(istream& in, string &str){
 	stringstream ss;
 
 	char c;
@@ -83,14 +80,26 @@ int read_file(const char* path, string &str){
 	//	c = ifs.get();
 	//	ss << c;
 	//} while (ifs.good());
-	while((c = ifs.get()) != EOF)
+	while((c = in.get()) != EOF)
 		ss << c;
 
 	str = ss.str();
+}
+
+int read_file(const char* path, string &str){
+	ifstream ifs(path);
+	if(!ifs.is_open())
+		return -1;
+
+	read_all(ifs, str);
 
 	ifs.close();
 
 	return 0;
+}
+
+void read_cin(string &str){
+	read_all(cin, str);
 }
 
 int get_port(const string &ipport, string &port){
