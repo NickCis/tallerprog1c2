@@ -24,6 +24,11 @@ int TCPSocketListener::listen(const int port, const std::string& ip){
 }
 
 int TCPSocketListener::listen(struct sockaddr_in & serv_addr){
+	int optval = 1;
+	if (setsockopt(this->fd, SOL_SOCKET, SO_REUSEADDR, &optval,
+				sizeof(int)))
+		return -1;
+
 	if ( bind( this->fd, (struct sockaddr *) &serv_addr,
 			(socklen_t) sizeof(struct sockaddr)))
 		return -1;
